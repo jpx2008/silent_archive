@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silent Archive</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#050706;--graphite:#151a18;--graphite2:#2a302e;--emerald:#00c27a;--emerald2:#007a50;--light:#e8f4ee}
+body{min-height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif;color:#fff;background:radial-gradient(circle at 50% 45%,rgba(0,194,122,.13),transparent 30%),linear-gradient(135deg,#030504,#101513 52%,#030504);position:relative}
+body:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:18px 18px;opacity:.25}
+.scene{position:relative;width:min(1180px,96vw);height:94vh;display:flex;align-items:center;justify-content:center}
+.splatter{position:absolute;background:var(--emerald);border-radius:50%;filter:drop-shadow(0 0 12px rgba(0,194,122,.4));opacity:.8}.s1{width:22px;height:22px;left:10%;top:25%}.s2{width:9px;height:9px;left:20%;top:18%}.s3{width:15px;height:15px;right:10%;top:28%}.s4{width:7px;height:7px;right:20%;top:19%}.s5{width:12px;height:12px;left:16%;bottom:20%}.s6{width:6px;height:6px;right:15%;bottom:19%}
+.graffiti{display:none;position:absolute;inset:0;opacity:.2;pointer-events:none}.graffiti span{position:absolute;color:var(--emerald);font-weight:950;font-size:32px;letter-spacing:2px;transform:rotate(-12deg)}.graffiti span:nth-child(1){left:4%;top:13%}.graffiti span:nth-child(2){right:3%;bottom:16%;transform:rotate(10deg)}
+/* No title at the top: the name is created by the spray action. */
+.stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.can-wrap{position:absolute;left:50%;top:50%;width:270px;height:430px;transform:translate(-50%,-50%);z-index:6;cursor:pointer;filter:drop-shadow(0 25px 35px rgba(0,0,0,.72));transition:filter .3s}
+.can-wrap:hover{filter:drop-shadow(0 25px 45px rgba(0,194,122,.32))}
+.can-wrap.active{animation:canMove .95s cubic-bezier(.2,.8,.2,1) forwards}
+.can{position:absolute;left:45px;bottom:0;width:180px;height:315px;border-radius:26px 26px 38px 38px;background:linear-gradient(90deg,#080b0a 0%,#252d29 17%,#3d4743 28%,#121715 50%,#343d39 77%,#080b0a 100%);border:2px solid #53615b;box-shadow:inset 13px 0 20px rgba(255,255,255,.045),inset -15px 0 20px rgba(0,0,0,.55)}
+.can:after{content:"";position:absolute;inset:10px;border-radius:20px 20px 30px 30px;border:1px solid rgba(255,255,255,.05);pointer-events:none}
+.cap{position:absolute;left:62px;top:18px;width:145px;height:65px;border-radius:15px 15px 8px 8px;background:linear-gradient(90deg,#171d1a,#596660 30%,#202622 65%,#0d110f);border:2px solid #68756e;z-index:2}
+.nozzle{position:absolute;left:99px;top:0;width:72px;height:35px;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,#14d48d,#008b5a);box-shadow:0 0 18px rgba(0,194,122,.3);z-index:3}
+.label{position:absolute;left:13px;right:13px;top:90px;height:176px;border-radius:12px;background:#080b0a;border:1px solid #00a86b;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.label:before{content:"";position:absolute;width:250px;height:72px;background:var(--emerald);transform:rotate(-17deg);opacity:.9}
+.label:after{content:"";position:absolute;bottom:-4px;left:25%;width:5px;height:28px;background:var(--emerald);border-radius:0 0 8px 8px;box-shadow:34px -8px 0 0 var(--emerald),70px 3px 0 0 var(--emerald);opacity:.8}
+.label h2{position:relative;font-family:Impact,'Arial Black',sans-serif;font-size:38px;letter-spacing:5px;color:#050706;text-shadow:1px 1px 0 #e8f4ee;z-index:2}.label p{position:relative;margin-top:8px;font-size:10px;letter-spacing:3px;color:#fff;text-transform:uppercase;z-index:2}
+/* hand-drawn spray cloud, inspired by the reference */
+.spray-cloud{position:absolute;left:58px;top:-100px;width:155px;height:125px;opacity:0;z-index:1;transform:scale(.5)}
+.spray-cloud i{position:absolute;display:block;background:#00c27a;border:3px solid #007a50;border-radius:50%;box-shadow:0 0 12px rgba(0,194,122,.28)}
+.spray-cloud i:nth-child(1){width:62px;height:62px;left:5px;top:42px}.spray-cloud i:nth-child(2){width:72px;height:72px;left:40px;top:18px}.spray-cloud i:nth-child(3){width:54px;height:54px;left:88px;top:38px}.spray-cloud i:nth-child(4){width:36px;height:36px;left:112px;top:68px}.spray-cloud i:nth-child(5){width:27px;height:27px;left:25px;top:16px}
+.spray-cloud:after{content:"";position:absolute;right:5px;bottom:2px;width:48px;height:6px;background:#00c27a;transform:rotate(28deg);border-radius:50%}
+.spray-cloud:before{content:"";position:absolute;right:25px;bottom:-25px;width:4px;height:24px;background:#00c27a;border-radius:0 0 8px 8px;box-shadow:13px -8px 0 0 #00c27a,28px -2px 0 0 #00c27a;opacity:.9}
+.can-wrap.active .spray-cloud{animation:cloudBurst .55s ease-out .15s forwards}
+.spray-dot{position:absolute;left:120px;top:18px;width:5px;height:5px;border-radius:50%;background:#b7ffe0;opacity:0}.can-wrap.active .spray-dot{animation:dot .8s ease-out .12s forwards}
+/* Letters are created one by one by JS */
+.paint{position:absolute;left:2%;top:46%;width:76%;height:190px;transform:translateY(-50%);z-index:5;display:flex;align-items:center;justify-content:center;gap:2px;pointer-events:none;white-space:nowrap}
+.letter{position:relative;display:inline-block;font-family:Impact,'Arial Black',Arial,sans-serif;font-size:clamp(42px,7vw,86px);font-weight:950;letter-spacing:2px;color:#08d98b;opacity:0;transform:translateY(28px) scale(.7) rotate(-5deg);text-shadow:2px 2px 0 #006b49,4px 4px 0 #003b29,0 0 12px rgba(0,194,122,.5);filter:blur(4px)}
+.letter.space{width:.38em}
+.letter.show{animation:letterIn .34s cubic-bezier(.2,.9,.2,1) forwards}
+.letter:after{content:"";position:absolute;left:45%;bottom:-12px;width:5px;height:0;background:#08d98b;border-radius:0 0 7px 7px;box-shadow:13px 7px 0 -1px #08d98b,24px 1px 0 -1px #08d98b;opacity:.9}
+.letter.show:after{animation:drip .7s ease-out .16s forwards}
+.message{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);text-align:center;z-index:8;opacity:0;animation:fadeIn .8s 1s forwards}.message p{font-size:17px;color:#dce7e2;letter-spacing:3px;margin-bottom:18px}.enter-btn{display:inline-block;padding:13px 36px;border:1px solid var(--emerald);border-radius:6px;background:linear-gradient(135deg,#00c27a,#007a50);color:#050706;text-decoration:none;font-weight:900;letter-spacing:2px;text-transform:uppercase;box-shadow:0 0 25px rgba(0,194,122,.22);transition:.25s}.enter-btn:hover{transform:translateY(-3px);box-shadow:0 0 35px rgba(0,194,122,.45)}
+.hint{position:absolute;bottom:24%;left:50%;transform:translateX(-50%);color:#9eaaa5;font-size:12px;letter-spacing:3px;text-transform:uppercase;z-index:7;opacity:.8;transition:.3s}.active~.hint{opacity:0}
+@keyframes canMove{0%{left:50%;transform:translate(-50%,-50%) rotate(0) scale(1)}45%{left:68%;transform:translate(-50%,-50%) rotate(-3deg) scale(.93)}100%{left:84%;transform:translate(-50%,-50%) rotate(2deg) scale(.78)}}
+@keyframes cloudBurst{0%{opacity:0;transform:scale(.45) rotate(-8deg)}55%{opacity:.95;transform:scale(1.08) rotate(2deg)}100%{opacity:.7;transform:scale(1) rotate(0)}}
+@keyframes dot{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(90px,-55px)}}
+@keyframes letterIn{0%{opacity:0;transform:translateY(28px) scale(.7) rotate(-5deg);filter:blur(5px)}70%{opacity:1;transform:translateY(-5px) scale(1.08) rotate(2deg);filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:blur(0)}}
+@keyframes drip{0%{height:0}60%{height:24px}100%{height:34px}}
+@keyframes fadeIn{to{opacity:1}}
+@media(max-width:800px){.paint{top:43%;left:2%;width:94vw;gap:0;justify-content:flex-start}.letter{font-size:clamp(28px,8vw,58px);letter-spacing:1px}.can-wrap{transform:translate(-50%,-50%) scale(.78)}.can-wrap.active{animation:canMoveMobile .9s forwards}.hint{bottom:27%}.message p{font-size:13px}}
+@keyframes canMoveMobile{0%{left:50%;transform:translate(-50%,-50%) scale(.78)}100%{left:88%;transform:translate(-50%,-50%) scale(.54) rotate(2deg)}}
+</style>
+</head>
+<body>
+<div class="scene">
+  <i class="splatter s1"></i><i class="splatter s2"></i><i class="splatter s3"></i><i class="splatter s4"></i><i class="splatter s5"></i><i class="splatter s6"></i>
+  <div class="graffiti"><span>SA</span><span>ARCHIVE</span></div>
+  <div class="stage">
+    <div class="paint" id="paintText" aria-live="polite"></div>
+    <div class="can-wrap" id="sprayCan" role="button" tabindex="0" aria-label="Presiona la lata de graffiti">
+      <div class="spray-cloud"><i></i><i></i><i></i><i></i><i></i></div><div class="spray-dot"></div>
+      <div class="cap"></div><div class="nozzle"></div>
+      <div class="can"><div class="label"><h2>SA</h2><p>Silent Archive</p></div></div>
+    </div>
+  </div>
+  <div class="hint" id="hint">Presiona la lata para pintar</div>
+  <div class="message"><p>BIENVENIDOS</p><a class="enter-btn" href="index.html">Entrar</a></div>
+</div>
+<script>
+const can=document.getElementById('sprayCan');
+const paint=document.getElementById('paintText');
+const hint=document.getElementById('hint');
+let running=false;
+function buildLetters(){
+  paint.innerHTML='';
+  [...'SILENT ARCHIVE'].forEach((ch,i)=>{
+    const span=document.createElement('span');
+    span.className='letter'+(ch===' ' ? ' space':'');
+    if(ch!==' ') span.textContent=ch;
+    paint.appendChild(span);
+    if(ch!==' ') setTimeout(()=>span.classList.add('show'),1050+i*145);
+  });
+}
+function activate(){
+  if(running)return;
+  running=true;
+  can.classList.remove('active');
+  void can.offsetWidth;
+  can.classList.add('active');
+  hint.style.opacity='0';
+  buildLetters();
+}
+can.addEventListener('click',activate);
+can.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}});
+</script>
+</body>
+</html>

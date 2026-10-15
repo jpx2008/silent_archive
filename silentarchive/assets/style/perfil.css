@@ -1,0 +1,192 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0a0d0c;
+}
+
+.contenedor {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px;
+    background: #ffffff;
+    padding: 20px;
+    text-align: center;
+    border-right: 3px solid #2e3a35;
+    box-shadow: 0 0 10px #24312b;
+}
+
+.pfp {
+    width: 120px;
+    height: 120px;
+    border-radius: 100px;
+    border: 4px solid #00c27a;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.sidebar h2 {
+    margin: 10px 0;
+    color: #00c27a;
+}
+
+.familia {
+    font-size: 14px;
+    color: #c5ceca;
+    margin-bottom: 20px;
+}
+
+.dinamica {
+    background: #18201e;
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid #3d4b45;
+    text-align: left;
+    font-size: 14px;
+}
+
+.dinamica h3 {
+    color: #00c27a;
+    text-align: center;
+}
+
+.dinamica ol {
+    margin-top: 10px;
+}
+
+/* RIGHT CONTENT */
+.contenido {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner {
+    width: 90%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #274238;
+}
+
+/* BOTÓN REGRESAR */
+.btn-regresar {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 25px;
+    background: #00c27a;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+    box-shadow: 0 5px 10px #007a50;
+}
+
+.btn-regresar:hover {
+    background: #00a86b;
+    transform: scale(1.05);
+}
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #0a0d0c;
+}
+
+.contenedor {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px;
+    background: white;
+    padding: 25px;
+    box-shadow: 0 0 15px #2c4b3d;
+    text-align: center;
+}
+
+.sidebar .pfp {
+    width: 120px;
+    height: 120px;
+    border-radius: 80px;
+    object-fit: cover;
+    border: 3px solid #00a86b;
+}
+
+.familia {
+    color: #00a86b;
+    font-weight: bold;
+}
+
+.dinamica ol {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.dinamica li {
+    margin-bottom: 8px;
+    color: #d8dfdc;
+}
+
+/* TARJETA SELLOS */
+.contenido {
+    flex: 1;
+    padding: 40px;
+}
+
+.tarjeta-sellos {
+    width: 90%;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 0 15px #235b49;
+    text-align: center;
+}
+
+.sellos {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 12px;
+}
+
+.sello {
+    width: 45px;
+    height: 45px;
+    border: 3px dashed #00a86b;
+    border-radius: 50%;
+}
+
+.sello.lleno {
+    background: #00c27a;
+    color: white;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BOTÓN */
+.btn-regresar {
+    margin-top: 30px;
+    display: inline-block;
+    background: #00c27a;
+    padding: 12px 25px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.btn-regresar:hover {
+    background: #007a50;
+}

@@ -1,0 +1,53 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0d1110;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.card {
+    width: 380px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 0 15px #235b49;
+    text-align: center;
+}
+
+.card h2 {
+    color: #c21876;
+}
+
+.card input {
+    width: 92%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 2px solid #397563;
+    border-radius: 10px;
+}
+
+.card input[type="file"] {
+    border: none;
+}
+
+.btn-rosa {
+    width: 92%;
+    padding: 12px;
+    background: #00c27a;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-rosa:hover {
+    background: #007a50;
+}
+
+.link a {
+    color: #00a86b;
+    margin-top: 15px;
+}
